@@ -4,7 +4,7 @@ O sistema oferece sugestões criativas de ideias de conteúdo para criadores dig
 
 ****Participantes do Grupo****
 - Pedro Henrique Leal Vieira
-- Ruy Geroncio Neto
+- Ruy Geroncio da Silva Neto
 
 ****Descrição do Projeto****
 O Gerador de Ideias Virais permite que criadores de conteúdo recebam sugestões personalizadas de temas para vídeos,
