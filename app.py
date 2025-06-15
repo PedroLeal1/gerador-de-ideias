@@ -1,23 +1,9 @@
 import streamlit as st
 import google.generativeai as genai
 
-# ✅ Coloque sua chave real aqui
-API_KEY = "AIzaSyBG8DG3bokET1QmKIwWJUQxo3U5KbAUNx0"
+genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
-# ✅ Segurança básica: se esquecer de colocar, avisa e para tudo
-if not API_KEY:
-    st.error("❌ Chave da API não foi definida. Edite o código e insira sua chave.")
-    st.stop()
-
-# ✅ Configura a API do Gemini
-genai.configure(api_key=API_KEY)
-
-# ✅ Inicializa o modelo Gemini
-try:
-    model = genai.GenerativeModel("gemini-2.0-flash")
-except Exception as e:
-    st.error(f"Erro ao inicializar o modelo: {e}")
-    st.stop()
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 # Configuração da página
 st.set_page_config(page_title="Gerador de Ideias Virais")
