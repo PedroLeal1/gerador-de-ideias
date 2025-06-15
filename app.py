@@ -1,8 +1,10 @@
 import streamlit as st
 import google.generativeai as genai
 
+# Configura a API do Gemini com segurança
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
+# Inicializa o modelo
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 # Configuração da página
@@ -13,26 +15,42 @@ st.title("🎯 Gerador de Ideias Virais para Criadores de Conteúdo")
 tema = st.text_input("Informe o nicho ou tema do seu conteúdo (ex: futebol, games, maquiagem):")
 
 # Escolha do formato
-formato = st.selectbox("Formato do conteúdo:", ["Vídeo", "Post de Instagram", "Reels/TikTok", "Tweet", "Carrossel"])
+formato = st.selectbox(
+    "Formato do conteúdo:",
+    ["Vídeo", "Post de Instagram", "Reels/TikTok", "Tweet", "Carrossel"]
+)
 
-# Checkboxes de modificadores
-st.markdown("### Personalizações extras:")
-humor = st.checkbox("Adicionar humor")
-chamada = st.checkbox("Incluir chamada para engajamento")
-trend = st.checkbox("Inspirar-se em tendências atuais")
+# Escolha da categoria de conteúdo
+st.markdown("### Tipos de Conteúdo:")
+categoria = st.selectbox(
+    "Escolha o estilo principal do seu conteúdo:",
+    [
+        "🎮 Entretenimento",
+        "🎭 Humor",
+        "📚 Educativo",
+        "📢 Promoção",
+        "🎯 Opinião",
+        "🧠 Curiosidades"
+    ]
+)
+
+# Grau de Originalidade
+st.markdown("### Grau de Originalidade:")
+originalidade = st.selectbox(
+    "Escolha o nível:",
+    ["🚀 Inovador", "⚖️ Equilibrado", "🔥 Popular e Seguro"]
+)
 
 # Geração
 if st.button("Gerar Ideia"):
     if tema:
-        prompt = f"Crie uma ideia viral de conteúdo no formato '{formato}' sobre o tema '{tema}'."
-        if humor:
-            prompt += " Adicione um toque de humor."
-        if chamada:
-            prompt += " Inclua uma chamada para incentivar o engajamento do público."
-        if trend:
-            prompt += " Considere tendências atuais relevantes."
-
-        prompt += " Responda com uma ideia prática, bem detalhada, para ser executada pelo criador de conteúdo."
+        # Montagem do prompt
+        prompt = (
+            f"Crie uma ideia viral de conteúdo no formato '{formato}' sobre o tema '{tema}'. "
+            f"O estilo do conteúdo deve ser '{categoria}'. "
+            f"Busque um nível de originalidade '{originalidade}'. "
+            f"Responda com uma ideia prática, bem detalhada, aplicável e diretamente executável por um criador de conteúdo."
+        )
 
         try:
             resposta = model.generate_content(prompt)
